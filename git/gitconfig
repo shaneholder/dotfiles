@@ -2,7 +2,6 @@
 	name = Shane Holder
 	email = shane.holder@pobox.com
 [core]
-	autocrlf = true
 	excludesfile = ~/.global_ignore
 	longpaths = true
 [color]
@@ -79,6 +78,7 @@
 [push]
 	default = simple
 	followTags = true
+	autoSetupRemote = true
 # [credential]
 # 	helper = manager-core
 [filter "lfs"]
@@ -87,6 +87,8 @@
 	clean = git-lfs clean -- %f
 [fetch]
 	prune = true
+	pruneTags = true
+	all = true
 [diff]
 	guitool = kdiff3
 [pull]
@@ -95,3 +97,28 @@
 	autoStash = false
 [winUpdater]
 	recentlySeenVersion = 2.28.0.windows.1
+
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[init]
+	defaultBranch = main
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+
