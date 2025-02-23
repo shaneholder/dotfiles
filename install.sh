@@ -23,7 +23,7 @@ export elevate
 
 
 if [ "${INSTALL_MODE}" = 'full' ]; then
-
+  echo "Installing full dotfiles"
 fi
 
 echo "🟢 dotfiles setup complete"
