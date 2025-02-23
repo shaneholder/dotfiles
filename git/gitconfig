@@ -1,0 +1,97 @@
+[user]
+	name = Shane Holder
+	email = shane.holder@pobox.com
+[core]
+	autocrlf = true
+	excludesfile = ~/.global_ignore
+	longpaths = true
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = blue
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+[alias]
+  lb = !git reflog show --pretty=format:'%gs ~ %gd' --date=relative | grep 'checkout:' | grep -oE '[^ ]+ ~ .*' | awk -F~ '!seen[$1]++' | head -n 10 | awk -F' ~ HEAD@{' '{printf(\"  \\033[33m%13s: \\033[37m %s\\033[0m\\n\", substr($2, 1, length($2)-1), $1)}'
+	ci = commit --verbose
+	cn = commit --verbose --amend
+	ca = commit --verbose --all
+	cw = commit -m \"WIP\"
+	cs = commit -m \"shrinkwrapped\"
+	cm = commit -m
+	cc = commit -c
+	b = branch  
+	bltr = branch --sort=-committerdate
+	a = add
+	aa = add --update
+	ap = add --patch
+	c = checkout
+	co = checkout
+	f = fetch
+	pr = pull --rebase
+	pom = push origin master
+	r = rebase --interactive HEAD~10
+	rc = rebase --continue
+	ra = rebase --abort
+	d = diff
+	p = diff --cached
+	ds = diff --stat
+	dt = difftool --no-prompt
+	s = -p status
+	ss = -p status -s
+	l = log --pretty=oneline --abbrev-commit
+	ll = log --pretty=oneline --abbrev-commit --max-count=15
+	lc = log --stat --summary
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lga = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit --all
+	prune = fetch --prune
+	pi = cherry-pick
+	ki = stash --keep-index
+	stage = add
+	unstage = reset HEAD
+	pop = reset --soft HEAD^
+	review = log -p --max-count=1
+	rv = remote -v
+	fp = format-patch --stdout
+	gone = ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" {print $1}' | xargs -r git branch -D
+[i18n]
+	filesEncoding = utf-8
+[apply]
+	whitespace = nowarn
+[man]
+	viewer = less
+[man "less"]
+	cmd = less
+[url "http://"]
+	insteadOf = git://
+[push]
+	default = simple
+	followTags = true
+# [credential]
+# 	helper = manager-core
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	required = true
+	clean = git-lfs clean -- %f
+[fetch]
+	prune = true
+[diff]
+	guitool = kdiff3
+[pull]
+	rebase = false
+[rebase]
+	autoStash = false
+[winUpdater]
+	recentlySeenVersion = 2.28.0.windows.1
