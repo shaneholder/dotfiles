@@ -20,6 +20,7 @@ export elevate
 # Install dependencies
 ###
 ./bin/dotfiles git
+./bin/dotfiles zsh
 
 
 if [ "${INSTALL_MODE}" = 'full' ]; then
