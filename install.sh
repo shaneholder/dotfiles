@@ -21,6 +21,7 @@ export elevate
 ###
 ./bin/dotfiles git
 ./bin/dotfiles zsh
+./bin/dotfiles copilot
 
 
 if [ "${INSTALL_MODE}" = 'full' ]; then
