@@ -20,6 +20,7 @@ export elevate
 # Install dependencies
 ###
 ./bin/dotfiles git
+./bin/dotfiles omz
 ./bin/dotfiles zsh
 ./bin/dotfiles copilot
 
