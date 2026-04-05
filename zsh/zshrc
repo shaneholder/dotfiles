@@ -2,7 +2,7 @@
 export ZSH="$HOME/.oh-my-zsh"
 
 # Disable OMZ theme — oh-my-posh owns the prompt
-ZSH_THEME=""
+ZSH_THEME="fino-time" # set by `omz`
 
 # Plugins
 plugins=(git)
