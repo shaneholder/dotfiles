@@ -39,7 +39,7 @@ function configure () {
   # apply custom configuration if script exists
   if [ -f "${DOTFILES_LOCATION}/${package}/configure.sh" ]; then
     echo "🔵 Configuring ${package}"
-    cd "${DOTFILES_LOCATION}/${package}" && ./configure.sh
+    cd "${DOTFILES_LOCATION}/${package}" && ./configure.sh "$@"
   fi
 }
 
@@ -53,8 +53,8 @@ elif [[ "${1}" == "ripgrep" ]]; then
 else
   package="${1}"
   cmd="${1}"
-  shift
 fi
+shift
 
 install "${package}"
-configure "${package}"
+configure "$@"

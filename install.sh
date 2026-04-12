@@ -9,8 +9,12 @@ set -e
 # DOTFILES repo path
 export DOTFILES_LOCATION=$(pwd)
 
-# INSTALL_MODE == 'full' for workstation, else minimal for devcontainers
-export INSTALL_MODE="${1}"
+# Parse args: optional --force flag and optional INSTALL_MODE
+FORCE_FLAG=""
+export INSTALL_MODE=""
+for arg in "$@"; do
+  [[ "${arg}" == "--force" ]] && FORCE_FLAG="--force" || INSTALL_MODE="${arg}"
+done
 
 # create elevate variable to use sudo if needed
 [ "$EUID" -eq 0 ] && elevate='' || elevate='sudo'
@@ -19,10 +23,10 @@ export elevate
 ###
 # Install dependencies
 ###
-./bin/dotfiles git
-./bin/dotfiles omz
-./bin/dotfiles zsh
-./bin/dotfiles copilot
+./bin/dotfiles git ${FORCE_FLAG}
+./bin/dotfiles omz ${FORCE_FLAG}
+./bin/dotfiles zsh ${FORCE_FLAG}
+./bin/dotfiles copilot ${FORCE_FLAG}
 
 
 if [ "${INSTALL_MODE}" = 'full' ]; then
