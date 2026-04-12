@@ -24,3 +24,19 @@ for target in "${!LINKS[@]}"; do
   mkdir -p "$(dirname "${target}")"
   ln -snT "${src}" "${target}"
 done
+
+# Install plugins listed in plugins.txt
+PLUGINS_FILE="${DOTFILES_LOCATION}/copilot/plugins.txt"
+if [[ -f "${PLUGINS_FILE}" ]]; then
+  INSTALLED=$(copilot plugin list 2>/dev/null || true)
+  while IFS= read -r plugin || [[ -n "${plugin}" ]]; do
+    [[ -z "${plugin}" || "${plugin}" == \#* ]] && continue
+    plugin_name="${plugin##*/}"
+    if echo "${INSTALLED}" | grep -q "• ${plugin_name}"; then
+      echo "Skipping plugin ${plugin}: already installed"
+    else
+      echo "Installing plugin ${plugin}..."
+      copilot plugin install "${plugin}"
+    fi
+  done < "${PLUGINS_FILE}"
+fi
