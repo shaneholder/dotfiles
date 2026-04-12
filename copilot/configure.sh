@@ -2,27 +2,25 @@
 
 set -e
 
+FORCE=false
+[[ "${1}" == "--force" ]] && FORCE=true
+
 # VS Code user prompts directory (works in both WSL and devcontainers)
-PROMPTS_DIR="${HOME}/.vscode-server/data/User/prompts"
-SKILLS_DIR="${HOME}/.copilot/skills"
+declare -A LINKS=(
+  ["${HOME}/.vscode-server/data/User/prompts"]="${DOTFILES_LOCATION}/copilot/prompts"
+  ["${HOME}/.copilot/skills"]="${DOTFILES_LOCATION}/copilot/skills"
+  ["${HOME}/.copilot/agents"]="${DOTFILES_LOCATION}/copilot/agents"
+  ["${HOME}/.copilot/hooks"]="${DOTFILES_LOCATION}/copilot/hooks"
+)
 
-mkdir -p "${PROMPTS_DIR}"
-mkdir -p "${SKILLS_DIR}"
-
-# Symlink all prompt and agent files
-for file in "${DOTFILES_LOCATION}"/copilot/prompts/*.{prompt,agent}.md; do
-  [ -f "${file}" ] || continue
-  ln -sf "${file}" "${PROMPTS_DIR}/$(basename "${file}")"
-done
-
-# Symlink all skill directories
-for dir in "${DOTFILES_LOCATION}"/copilot/skills/*/; do
-  [ -d "${dir}" ] || continue
-  skill_name="$(basename "${dir}")"
-  target="${SKILLS_DIR}/${skill_name}"
-  # Remove existing non-symlink directory before linking
-  if [ -d "${target}" ] && [ ! -L "${target}" ]; then
-    rm -rf "${target}"
+for target in "${!LINKS[@]}"; do
+  src="${LINKS[$target]}"
+  if [[ -L "${target}" ]]; then
+    "${FORCE}" && rm "${target}" || { echo "Skipping ${target}: already a symlink (use --force to replace)"; continue; }
+  elif [[ -e "${target}" ]]; then
+    echo "Skipping ${target}: exists and is not a symlink"
+    continue
   fi
-  ln -sfnT "${dir}" "${target}"
+  mkdir -p "$(dirname "${target}")"
+  ln -snT "${src}" "${target}"
 done
