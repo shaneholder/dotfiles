@@ -11,6 +11,7 @@ declare -A LINKS=(
   ["${HOME}/.copilot/skills"]="${DOTFILES_LOCATION}/copilot/skills"
   ["${HOME}/.copilot/agents"]="${DOTFILES_LOCATION}/copilot/agents"
   ["${HOME}/.copilot/hooks"]="${DOTFILES_LOCATION}/copilot/hooks"
+  ["${HOME}/.agents"]="${DOTFILES_LOCATION}/copilot/agents"
 )
 
 for target in "${!LINKS[@]}"; do
