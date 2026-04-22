@@ -26,6 +26,15 @@ for target in "${!LINKS[@]}"; do
   ln -snT "${src}" "${target}"
 done
 
+# Install MCP servers
+MCP_INSTALLED=$(copilot mcp list 2>/dev/null || true)
+if ! echo "${MCP_INSTALLED}" | grep -q "playwright"; then
+  echo "Installing Playwright MCP server..."
+  copilot mcp add playwright -- npx @playwright/mcp@latest
+else
+  echo "Skipping MCP playwright: already installed"
+fi
+
 # Install plugins listed in plugins.txt
 PLUGINS_FILE="${DOTFILES_LOCATION}/copilot/plugins.txt"
 if [[ -f "${PLUGINS_FILE}" ]]; then
